@@ -9,6 +9,15 @@ numbers, dates, and objects and arrays of these basic types.
 Creates a deep copy of a primitive type, object, or array of primitive types.
 
 
+### forEachKey(obj, callback)
+
+Like Array.forEach, but iterates properties of an object rather than elements
+of an array.  Equivalent to:
+
+    for (var key in obj)
+            callback(key, obj[key]);
+
+
 ### validateJsonObject(schema, object)
 
 Uses JSON validation (via JSV) to validate the given object against the given
