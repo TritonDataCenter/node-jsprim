@@ -24,6 +24,24 @@ of an array.  Equivalent to:
             callback(key, obj[key]);
 
 
+### startsWith(str, prefix)
+
+Returns true if the given string starts with the given prefix and false
+otherwise.
+
+
+### endsWith(str, suffix)
+
+Returns true if the given string ends with the given suffix and false
+otherwise.
+
+
+### iso8601(date)
+
+Converts a Date object to an ISO8601 date string of the form
+"YYYY-MM-DDTHH:MM:SS.sssZ".  This format is not customizable.
+
+
 ### validateJsonObject(schema, object)
 
 Uses JSON validation (via JSV) to validate the given object against the given
