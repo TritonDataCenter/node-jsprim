@@ -24,6 +24,12 @@ of an array.  Equivalent to:
             callback(key, obj[key]);
 
 
+### randElt(array)
+
+Returns an element from "array" selected uniformly at random.  If "array" is
+empty, throws an Error.
+
+
 ### startsWith(str, prefix)
 
 Returns true if the given string starts with the given prefix and false

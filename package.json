@@ -1,6 +1,6 @@
 {
 	"name": "jsprim",
-	"version": "0.0.5",
+	"version": "0.1.0",
 	"description": "utilities for primitive JavaScript types",
 	"main": "./lib/jsprim.js",
 	
