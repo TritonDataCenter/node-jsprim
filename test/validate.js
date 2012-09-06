@@ -1,19 +1,8 @@
 /*
- * test/validate.js: microbenchmark JSON object validation
- *
- * Using "JSV" implementation:
- *
- *      100 iterations
- *     6340 milliseconds
- *   63.400 ms per iteration on average
- *
- * Using "json-schema" implementation:
- *
- *      100 iterations
- *       31 milliseconds
- *    0.310 ms per iteration on average
+ * test/validate.js: test JSON validation
  */
 
+var assert = require('assert');
 var sprintf = require('extsprintf').sprintf;
 var jsprim = require('../lib/jsprim');
 
@@ -99,8 +88,10 @@ var schema = {
         },
         "results": {
             "type": "array",
+	    "minItems": 1,
             "items": {
                 "type": "object",
+		'additionalProperties': false,
                 "properties": {
                     "entry": {
                         "type": "string",
@@ -147,17 +138,125 @@ var template =   {
 };
 /* END JSSTYLED */
 
-var start = Date.now();
-var count = 1000;
+var obj, err;
 var validate = jsprim.validateJsonObjectJS;
-var i;
 
-for (i = 0; i < count; i++)
-	validate(schema, template);
+/* accepts a valid object */
+obj = jsprim.deepCopy(template);
+err = validate(schema, obj);
+assert(!err);
 
-var done = Date.now();
+/* rejects object with missing field */
+obj = jsprim.deepCopy(template);
+delete (obj['gid']);
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/required/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"gid"/.test(err.message));
 
-console.log(sprintf('%6d iterations', count));
-console.log(sprintf('%6d milliseconds', done - start));
-console.log(sprintf('%6s ms per iteration on average',
-    ((done - start) / count).toFixed(3)));
+/* rejects object with wrong type for field */
+obj = jsprim.deepCopy(template);
+obj['gid'] = 5;
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/string/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"gid"/.test(err.message));
+
+obj['gid'] = {};
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/string/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"gid"/.test(err.message));
+
+/* rejects strings that are too short */
+obj = jsprim.deepCopy(template);
+obj['gid'] = '';
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/long/.test(err.message) || /length/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"gid"/.test(err.message));
+
+/* rejects wrong type for integer fields */
+obj = jsprim.deepCopy(template);
+obj['ord'] = 'food';
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/integer/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"ord"/.test(err.message));
+
+/* XXX json-schema accepts strings as integers */
+obj = jsprim.deepCopy(template);
+obj['ord'] = '12';
+err = validate(schema, obj);
+if (err) {
+	console.log(err.message);
+	assert.ok(/integer/.test(err.message));
+	/* JSSTYLED */
+	assert.ok(/"ord"/.test(err.message));
+} else {
+	console.error('WARNING: accepted string as integer');
+}
+
+/* rejects floats for integers */
+obj = jsprim.deepCopy(template);
+obj['ord'] = 3.582;
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/integer/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"ord"/.test(err.message));
+
+/* rejects numbers too small */
+obj = jsprim.deepCopy(template);
+obj['ord'] = -5;
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/minimum/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"ord"/.test(err.message));
+
+/* rejects enum string not in the valid set */
+obj = jsprim.deepCopy(template);
+obj['state'] = 'fubared';
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/enumeration/.test(err.message) || /possible/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"state"/.test(err.message));
+
+/* XXX both accept malformed date */
+obj = jsprim.deepCopy(template);
+obj['crtime'] = 'fubared';
+err = validate(schema, obj);
+if (err) {
+	console.log(err.message);
+	/* JSSTYLED */
+	assert.ok(/"crtime"/.test(err.message));
+} else {
+	console.error('WARNING: accepted malformed date');
+}
+
+/* rejects array that is too short */
+obj = jsprim.deepCopy(template);
+obj['results'] = [];
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/minimum/.test(err.message));
+/* JSSTYLED */
+assert.ok(/"results"/.test(err.message));
+
+/* rejects objects with extra properties */
+obj = jsprim.deepCopy(template);
+obj['results'][0]['extra'] = 'hello';
+err = validate(schema, obj);
+console.log(err.message);
+assert.ok(/additional/.test(err.message));
+/* BEGIN JSSTYLED */
+assert.ok(/"results\[0\]"/.test(err.message) ||
+    /"results\/0"/.test(err.message));
+/* END JSSTYLED */
