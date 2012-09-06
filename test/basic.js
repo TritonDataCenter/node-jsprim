@@ -1,9 +1,9 @@
 /*
- * lib/test.js: tests jsprim functions
+ * test/basic.js: tests jsprim functions
  */
 
 var mod_assert = require('assert');
-var jsprim = require('./jsprim');
+var jsprim = require('../lib/jsprim');
 
 /* deepCopy */
 var obj = {
