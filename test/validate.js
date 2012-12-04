@@ -255,8 +255,9 @@ obj = jsprim.deepCopy(template);
 obj['results'][0]['extra'] = 'hello';
 err = validate(schema, obj);
 console.log(err.message);
-assert.ok(/additional/.test(err.message));
+assert.ok(/unsupported property/.test(err.message));
 /* BEGIN JSSTYLED */
 assert.ok(/"results\[0\]"/.test(err.message) ||
+    /"results\[0\]\.extra"/.test(err.message) ||
     /"results\/0"/.test(err.message));
 /* END JSSTYLED */
