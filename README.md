@@ -9,6 +9,11 @@ numbers, dates, and objects and arrays of these basic types.
 Creates a deep copy of a primitive type, object, or array of primitive types.
 
 
+### deepEqual(obj1, obj2)
+
+Returns whether two objects are equal.
+
+
 ### isEmpty(obj)
 
 Returns true if the given object has no properties and false otherwise.  This

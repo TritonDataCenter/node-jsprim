@@ -21,6 +21,41 @@ mod_assert.deepEqual(copy, obj);
 copy['home'] = false;
 mod_assert.ok(obj['home'] === true);
 
+/* deepEqual */
+var values = [
+    true, false, null, undefined, 0, 1,
+    new Date(),
+    {
+	'hello': 'world',
+	'goodbye': 'sky'
+    },
+    {
+	'hello': 'world'
+    },
+    {
+	'hello': 'world',
+	'goodbye': undefined
+    },
+    [],
+    [ 1, 2, 3 ],
+    [ 1, 2, 3, 4 ],
+    [ 1, { 'hello': 'world' }, false ]
+];
+values.forEach(function (o1, j) {
+	values.forEach(function (o2, k) {
+		if (j == k) {
+			mod_assert.ok(jsprim.deepEqual(o1, o2));
+			mod_assert.ok(
+			    jsprim.deepEqual(o1, jsprim.deepCopy(o2)));
+		} else {
+			mod_assert.ok(!jsprim.deepEqual(o1, o2));
+			mod_assert.ok(
+			    !jsprim.deepEqual(o1, jsprim.deepCopy(o2)));
+		}
+	});
+});
+mod_assert.ok(!jsprim.deepEqual(NaN, NaN));
+
 /* isEmpty */
 mod_assert.ok(jsprim.isEmpty({}));
 mod_assert.ok(!jsprim.isEmpty({ 'foo': 'bar' }));
