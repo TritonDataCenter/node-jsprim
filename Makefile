@@ -9,6 +9,11 @@
 #
 
 #
+# Tools
+#
+NPM		?= npm
+
+#
 # Files
 #
 JS_FILES	:= $(shell find lib test -name '*.js')
@@ -16,8 +21,9 @@ JSL_FILES_NODE   = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
 JSL_CONF_NODE	 = jsl.node.conf
 
-# Default target is "check"
+all:
+	$(NPM) install
+
 check:
 
-include ./Makefile.deps
 include ./Makefile.targ
