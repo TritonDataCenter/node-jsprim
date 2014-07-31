@@ -21,9 +21,14 @@ JSL_FILES_NODE   = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
 JSL_CONF_NODE	 = jsl.node.conf
 
+.PHONY: all
 all:
 	$(NPM) install
 
-check:
+.PHONY: test
+test:
+	node test/basic.js
+	node test/validate.js
+	@echo tests okay
 
 include ./Makefile.targ

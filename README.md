@@ -83,6 +83,20 @@ This function is strict: "depth" must be a non-negative integer and "obj" must
 be a non-null object with at least "depth" levels of nesting under all keys.
 
 
+### flattenIter(obj, depth, func)
+
+This is similar to `flattenObject` except that instead of returning an array,
+this function invokes `func(entry)` for each `entry` in the array that
+`flattenObject` would return.  `flattenIter(obj, depth, func)` is logically
+equivalent to `flattenObject(obj, depth).forEach(func)`.  Importantly, this
+version never constructs the full array.  Its memory usage is O(depth) rather
+than O(n) (where `n` is the number of flattened elements).
+
+There's another difference between `flattenObject` and `flattenIter` that's
+related to the special case where `depth === 0`.  In this case, `flattenObject`
+omits the array wrapping `obj` (which is regrettable).
+
+
 ### pluck(obj, key)
 
 Fetch nested property "key" from object "obj", traversing objects as needed.

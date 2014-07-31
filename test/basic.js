@@ -166,6 +166,63 @@ mod_assert.throws(function () { jsprim.flattenObject({}, 'hello'); });
 mod_assert.throws(function () { jsprim.flattenObject({}, -1); });
 
 
+/* flattenIter */
+v = {
+    'level1-A': {
+	'level2-Aa': {
+	    'level3-Aai': 4,
+	    'level3-Aaii': 7,
+	    'level3-Aaiii': 2
+	},
+	'level2-Ab': {
+	    'level3-Abi': 51,
+	    'level3-Abii': 31
+	},
+	'level2-Ac': {
+	    'level3-Aci': 1351,
+	    'level3-Acii': 121
+	}
+    },
+    'level1-B': {
+	'level2-Ba': {
+	    'level3-Bai': 8,
+	    'level3-Baii': 7,
+	    'level3-Baiii': 6
+	},
+	'level2-Bb': {
+	    'level3-Bbi': 5,
+	    'level3-Bbii': 4
+	},
+	'level2-Bc': {
+	    'level3-Bci': 3,
+	    'level3-Bcii': 2
+	}
+    }
+};
+
+var accum, unflattened;
+[
+    [ v, 1 ],
+    [ v, 2 ],
+    [ v, 3 ]
+].forEach(function (testcase, j) {
+	var flattened;
+	accum = [];
+	flattened = jsprim.flattenObject(testcase[0], testcase[1]);
+	jsprim.flattenIter(testcase[0], testcase[1],
+	    function (entry) { accum.push(entry); });
+	console.error('test case %d', j, accum);
+	mod_assert.deepEqual(accum, flattened);
+});
+/*
+ * It was arguably a mistake the way flatten with depth === 0 works.  That's the
+ * only case where the return value is not an array of arrays.  flattenIter()
+ * does the more sensible thing here.
+ */
+accum = [];
+jsprim.flattenIter(3, 0, function (entry) { accum.push(entry); });
+mod_assert.deepEqual(accum, [ [ 3 ] ]);
+
 /* pluck */
 mod_assert.equal('hello', jsprim.pluck({ 'world': 'hello' }, 'world'));
 mod_assert.equal('hello', jsprim.pluck({ 'world.bar': 'hello' }, 'world.bar'));
@@ -209,4 +266,4 @@ mod_assert.equal('2013-04-02T23:54:41.155Z', jsprim.iso8601(
 mod_assert.equal('2013-04-02T23:54:41.000Z', jsprim.iso8601(
     jsprim.parseDateTime(new Date(1364946881000).toString())));
 
-console.log('tests okay');
+console.log('basic tests okay');
