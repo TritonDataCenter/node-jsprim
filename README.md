@@ -143,6 +143,13 @@ the epoch or any string format that Date accepts, giving preference to the
 former where these two sets overlap (e.g., strings containing small numbers).
 
 
+### hrtimediff(timeA, timeB)
+
+Given two hrtime readings (as from Node's `process.hrtime()`), where timeA is
+later than timeB, compute the difference and return that as an hrtime.  It is
+illegal to invoke this for a pair of times where timeB is newer than timeA.
+
+
 ### validateJsonObject(schema, object)
 
 Uses JSON validation (via JSV) to validate the given object against the given
