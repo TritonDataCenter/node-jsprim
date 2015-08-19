@@ -157,6 +157,15 @@ schema.  On success, returns null.  On failure, *returns* (does not throw) a
 useful Error object.
 
 
+### extraProperties(object, allowed)
+
+Check an object for unexpected properties.  Accepts the object to check, and an
+array of allowed property name strings.  If extra properties are detected, an
+array of extra property names is returned.  If no properties other than those
+in the allowed list are present on the object, the returned array will be of
+zero length.
+
+
 # Contributing
 
 Code should be "make check" clean.  This target assumes that
