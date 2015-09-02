@@ -31,6 +31,7 @@ test:
 	node test/validate.js
 	node test/hrtimediff.js
 	node test/extraprops.js
+	node test/merge.js
 	@echo tests okay
 
 include ./Makefile.targ

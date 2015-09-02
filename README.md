@@ -165,6 +165,39 @@ array of extra property names is returned.  If no properties other than those
 in the allowed list are present on the object, the returned array will be of
 zero length.
 
+### mergeObjects(provided, overrides, defaults)
+
+Merge properties from objects "provided", "overrides", and "defaults".  The
+intended use case is for functions that accept named arguments in an "args"
+object, but want to provide some default values and override other values.  In
+that case, "provided" is what the caller specified, "overrides" are what the
+function wants to override, and "defaults" contains default values.
+
+The function starts with the values in "defaults", overrides them with the
+values in "provided", and then overrides those with the values in "overrides".
+For convenience, any of these objects may be falsey, in which case they will be
+ignored.  The input objects are never modified, but properties in the returned
+object are not deep-copied.
+
+For example:
+
+    mergeObjects(undefined, { 'objectMode': true }, { 'highWaterMark': 0 })
+
+returns:
+
+    { 'objectMode': true, 'highWaterMark': 0 }
+
+For another example:
+
+    mergeObjects(
+        { 'highWaterMark': 16, 'objectMode': 7 }, /* from caller */
+        { 'objectMode': true },                   /* overrides */
+        { 'highWaterMark': 0 },                   /* default */
+
+returns:
+
+    { 'objectMode': true, 'highWaterMark': 16 }
+
 
 # Contributing
 
