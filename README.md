@@ -192,7 +192,7 @@ For another example:
     mergeObjects(
         { 'highWaterMark': 16, 'objectMode': 7 }, /* from caller */
         { 'objectMode': true },                   /* overrides */
-        { 'highWaterMark': 0 },                   /* default */
+        { 'highWaterMark': 0 });                  /* default */
 
 returns:
 
