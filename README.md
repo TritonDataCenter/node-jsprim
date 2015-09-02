@@ -143,11 +143,30 @@ the epoch or any string format that Date accepts, giving preference to the
 former where these two sets overlap (e.g., strings containing small numbers).
 
 
-### hrtimediff(timeA, timeB)
+### hrtimeDiff(timeA, timeB)
 
 Given two hrtime readings (as from Node's `process.hrtime()`), where timeA is
 later than timeB, compute the difference and return that as an hrtime.  It is
 illegal to invoke this for a pair of times where timeB is newer than timeA.
+
+### hrtimeAdd(timeA, timeB)
+
+Add two hrtime intervals (as from Node's `process.hrtime()`), returning a new
+hrtime interval array.  This function does not modify either input argument.
+
+
+### hrtimeAccum(timeA, timeB)
+
+Add two hrtime intervals (as from Node's `process.hrtime()`), storing the
+result in `timeA`.  This function overwrites (and returns) the first argument
+passed in.
+
+
+### hrtimeNanosec(timeA), hrtimeMicrosec(timeA), hrtimeMillisec(timeA)
+
+This suite of functions converts a hrtime interval (as from Node's
+`process.hrtime()`) into a scalar number of nanoseconds, microseconds or
+milliseconds.  Results are truncated, as with `Math.floor()`.
 
 
 ### validateJsonObject(schema, object)

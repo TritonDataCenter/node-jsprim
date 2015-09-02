@@ -30,6 +30,8 @@ test:
 	node test/basic.js
 	node test/validate.js
 	node test/hrtimediff.js
+	node test/hrtimesecs.js
+	node test/hrtimeadd.js
 	node test/extraprops.js
 	node test/merge.js
 	@echo tests okay
