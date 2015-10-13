@@ -92,6 +92,8 @@ mod_assert.ok(!jsprim.endsWith('hofoobar', 'foo'));
 /* iso8601 */
 var d = new Date(1339194063451);
 mod_assert.equal(jsprim.iso8601(d), '2012-06-08T22:21:03.451Z');
+/* rfc1123 */
+mod_assert.equal(jsprim.rfc1123(d), 'Fri, 08 Jun 2012 22:21:03 GMT');
 
 /* randElt */
 var a = [];
