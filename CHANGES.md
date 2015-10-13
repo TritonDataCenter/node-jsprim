@@ -4,6 +4,10 @@
 
 None yet.
 
+## v1.2.0 (2015-10-13)
+
+* #9 want function for returning RFC1123 dates
+
 ## v1.1.0 (2015-09-02)
 
 * #6 a new suite of hrtime manipulation routines: `hrtimeAdd()`,
