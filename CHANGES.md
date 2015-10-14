@@ -4,6 +4,10 @@
 
 None yet.
 
+## v1.2.1 (2015-10-14)
+
+* #8 odd date parsing behaviour
+
 ## v1.2.0 (2015-10-13)
 
 * #9 want function for returning RFC1123 dates

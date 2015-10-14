@@ -268,4 +268,11 @@ mod_assert.equal('2013-04-02T23:54:41.155Z', jsprim.iso8601(
 mod_assert.equal('2013-04-02T23:54:41.000Z', jsprim.iso8601(
     jsprim.parseDateTime(new Date(1364946881000).toString())));
 
+mod_assert.equal('1970-01-01T00:00:02.000Z',
+    jsprim.iso8601(jsprim.parseDateTime('2000')));
+mod_assert.equal('1970-01-01T00:00:00.001Z',
+    jsprim.iso8601(jsprim.parseDateTime('1')));
+mod_assert.equal('1970-01-01T00:00:00.000Z',
+    jsprim.iso8601(jsprim.parseDateTime('0')));
+
 console.log('basic tests okay');
