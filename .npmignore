@@ -1,0 +1,8 @@
+/node_modules
+/test
+/lib/jsprim-jsv.js
+/jsl.node.conf
+/Makefile*
+/.gitignore
+/.gitmodules
+/.npmignore

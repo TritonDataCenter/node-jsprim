@@ -16,6 +16,7 @@
 
 var sprintf = require('extsprintf').sprintf;
 var jsprim = require('../lib/jsprim');
+var jsprimjsv = require('../lib/jsprim-jsv');
 
 /* BEGIN JSSTYLED */
 var schema = {
@@ -150,6 +151,7 @@ var template =   {
 var start = Date.now();
 var count = 1000;
 var validate = jsprim.validateJsonObjectJS;
+/* Or use: var validate = jsprimjsv.validateJsonObjectJSV; */
 var i;
 
 for (i = 0; i < count; i++)
