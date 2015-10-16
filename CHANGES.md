@@ -4,6 +4,11 @@
 
 None yet.
 
+## v1.2.2 (2015-10-15)
+
+* #11 NPM package shouldn't include any code that does `require('JSV')`
+* #12 jsl.node.conf missing definition for "module"
+
 ## v1.2.1 (2015-10-14)
 
 * #8 odd date parsing behaviour
