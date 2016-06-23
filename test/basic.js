@@ -60,6 +60,24 @@ mod_assert.ok(!jsprim.deepEqual(NaN, NaN));
 mod_assert.ok(jsprim.isEmpty({}));
 mod_assert.ok(!jsprim.isEmpty({ 'foo': 'bar' }));
 
+/* hasKey */
+mod_assert.ok(jsprim.hasKey(obj, 'family'));
+mod_assert.ok(jsprim.hasKey(obj, 'children'));
+mod_assert.ok(jsprim.hasKey(obj, 'home'));
+mod_assert.ok(jsprim.hasKey(obj, 'income'));
+mod_assert.ok(jsprim.hasKey(obj, 'dignity'));
+mod_assert.ok(jsprim.hasKey(obj, 'nhomes'));
+mod_assert.ok(obj.hasOwnProperty);
+mod_assert.ok(!jsprim.hasKey(obj, 'hasOwnProperty'));
+copy = Object.create(obj);
+copy.aprop = 'avalue';
+mod_assert.ok(jsprim.hasKey(copy, 'aprop'));
+mod_assert.equal(copy.nhomes, 1);
+mod_assert.ok(!jsprim.hasKey(copy, 'nhomes'));
+copy.hasOwnProperty = null;
+mod_assert.ok(jsprim.hasKey(copy, 'aprop'));
+mod_assert.ok(!jsprim.hasKey(copy, 'nhomes'));
+
 /* forEachKey */
 var keys = [];
 jsprim.forEachKey(obj, function (key, val) {
@@ -69,6 +87,25 @@ jsprim.forEachKey(obj, function (key, val) {
 keys.sort();
 mod_assert.deepEqual(keys,
     [ 'children', 'dignity', 'family', 'home', 'income', 'nhomes' ]);
+
+/*
+ * forEachKey skips non-own properties and works even on objects with a
+ * hasOwnProperty key overridden.
+ */
+copy = jsprim.deepCopy(obj);
+Object.prototype.aprop = 'avalue';
+mod_assert.equal(copy.aprop, 'avalue');
+copy.hasOwnProperty = null;
+keys = [];
+jsprim.forEachKey(copy, function (key, val) {
+	mod_assert.deepEqual(copy[key], val);
+	keys.push(key);
+});
+keys.sort();
+mod_assert.deepEqual(keys, [ 'children', 'dignity', 'family',
+    'hasOwnProperty', 'home', 'income', 'nhomes' ]);
+delete (Object.prototype.aprop);
+
 
 /* startsWith */
 mod_assert.ok(jsprim.startsWith('foobar', 'f'));
