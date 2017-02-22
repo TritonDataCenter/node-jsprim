@@ -34,6 +34,7 @@ test:
 	node test/hrtimeadd.js
 	node test/extraprops.js
 	node test/merge.js
+	node test/parse-integer.js
 	@echo tests okay
 
 include ./Makefile.targ
