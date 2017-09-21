@@ -21,6 +21,10 @@ mod_assert.deepEqual(copy, obj);
 copy['home'] = false;
 mod_assert.ok(obj['home'] === true);
 
+var TO_0 = { 'prop1': { 'foo': 'bar' }, 'prop2': 7 };
+var TO_1 = Object.create({ 'prop2': 7 });
+TO_1.prop1 = { 'prop1': { 'foo': 'bar' } };
+
 /* deepEqual */
 var values = [
     true, false, null, undefined, 0, 1,
@@ -39,7 +43,10 @@ var values = [
     [],
     [ 1, 2, 3 ],
     [ 1, 2, 3, 4 ],
-    [ 1, { 'hello': 'world' }, false ]
+    [ 1, { 'hello': 'world' }, false ],
+    {},
+    TO_0,
+    TO_1
 ];
 values.forEach(function (o1, j) {
 	values.forEach(function (o2, k) {
