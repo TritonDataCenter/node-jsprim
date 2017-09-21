@@ -4,6 +4,14 @@
 
 None yet.
 
+## v2.0.0 (2017-10-25)
+
+Major bump due to a change in the semantics of `deepEqual`. Code that relies on
+`deepEqual` to fail if inherited properties are present on the objects compared
+should be updated accordingly.
+
+* #24 `deepEqual` is incorrect when there are inherited properties
+
 ## v1.4.1 (2017-08-02)
 
 * #21 Update verror dep
