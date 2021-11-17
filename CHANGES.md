@@ -4,6 +4,14 @@
 
 None yet.
 
+## v2.0.2 (2021-11-16)
+
+* #30 json-schema dep is vulnerable to prototype pollution
+      See also https://security.snyk.io/vuln/SNYK-JS-JSONSCHEMA-1920922
+
+## v2.0.1 (2021-11-03)
+
+* Remove use of `git://` URLs.
 ## v2.0.0 (2017-10-25)
 
 Major bump due to a change in the semantics of `deepEqual`. Code that relies on
